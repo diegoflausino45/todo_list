@@ -1,17 +1,22 @@
 import { onSnapshot } from 'firebase/firestore';
 import './App.css';
-import { db, auth } from './firebaseConnection';
+import { db, auth} from './firebaseConnection';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
 function App() {
+
+  //--------------------------------------------------------------
+  //TAREFAS
   const [tasks, setTasks] = useState([]);
+
   const [taskName, setTaskName] = useState('')
   const [catTask, setCatTask] = useState('')
-  const [pesquisa, setPesquisa] = useState('')
+
   const [tasksFiltered, setTasksFiltered] = useState([])
 
-
+  //FUNÇÃO PARA CARREGAR AS TAREFAS DIRETO DO BANCO
   useEffect(() => {
   
     async function loadTasks() {
@@ -32,6 +37,7 @@ function App() {
     loadTasks();
   }, []);
 
+  //FUNÇÃO PARA ADICIONAR TAREFA
   async function addTask(name, categoria) {
 
 
@@ -55,13 +61,14 @@ function App() {
     setTaskName('')
   }
 
+  //FUNÇÃO PARA CONCLUIR TAREFA
   async function concluirTask(id, status){
       await updateDoc(doc(db, "tasks", id), {
         status: !status,
       })
   }
 
-
+  //FUNÇÃO PARA DELETAR TAREFA
   async function deleteTask(id){
     await deleteDoc(doc(db, "tasks", id))
     .then(() => {
@@ -72,16 +79,17 @@ function App() {
     })
   }
 
+  //FUNÇÃO PARA FILTRAR PELA BARRA DE PESQUISA
   function searchTasks(text){
 
     const valor = text.toLowerCase()
-    setPesquisa(valor)
 
     const filter = tasks.filter((task) => task.name.toLowerCase().includes(valor))
     setTasksFiltered(filter)
 
   }
 
+  //FUNÇÃO PARA FILTRAR POR TAREFAS CONCLUIDAS
   function handleChange(option){
     if(option === "feito"){
       console.log("FEITO")
@@ -100,6 +108,7 @@ function App() {
     setTasksFiltered(tasks)
   }
 
+  //FUNÇÕES DE ORDEM (CRESCENTE E DECRESCENTE)
   function ascOrder(){
     const taskAsc = [...tasks].sort((a, b) => a.name.localeCompare(b.name))     
     setTasksFiltered(taskAsc)
@@ -110,8 +119,107 @@ function App() {
     setTasksFiltered(taskDsc)
   }
 
+  //------------------------------------------------------------------
+  //USUARIOS
+
+  const [login, setLogin] = useState({})
+  const [user, setUser] = useState(false)
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+
+  
+  useEffect(() => {
+    async function checkLogin(){
+      onAuthStateChanged(auth, (user) => {
+        if(user){
+          setUser(true)
+          setLogin({
+            email: user.email,
+            id: user.uid,
+          })
+        }else{
+          setUser(false)
+          setLogin({})
+        }
+      })
+    }
+    checkLogin()
+  }, [])
+
+  async function signUser(){
+
+    await signInWithEmailAndPassword(auth, email, senha)
+    .then((userCredential) => {
+      setLogin({
+        email: userCredential.user.email,
+        id: userCredential.user.uid,
+      })
+      setUser(true)
+      setEmail('')
+      setSenha('')
+    })
+    .catch((error) => {
+        alert("Erro:" + error)
+      })
+
+  }
+
+  async function createUser(){
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(() => {
+      alert("Usuário criado com sucesso")
+      setEmail('')
+      setSenha('')
+    })
+    .catch((error) => {
+      if(error.code === 'auth/weak-password'){
+        alert("Senha muito fraca")
+      }else if(error.code === "auth/email-already-in-use"){
+        alert("Email já em uso!")
+      }
+    })
+  }
+
+  async function logout(){
+    await signOut(auth)
+    setUser(false)
+  }
+
+
+
+
+
+
   return (
     <div className="App">
+
+    <div className='container'>
+
+        {user ? <h3>Usuário Logado</h3> : <h3>Fazer Login</h3>}
+
+        {user ? undefined : (
+        <div className='sign'>
+          <form>
+            <input type='email' placeholder='Digite o seu email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
+            <input type='password' placeholder='Digite sua senha' value={senha} onChange={(e) => setSenha(e.target.value)}/>
+          </form>
+          <div className='btnSign'>
+            <button onClick={signUser}>Login</button>
+            <button onClick={createUser}>Cadastrar</button>
+          </div>
+        </div>
+        )}
+        {user && (
+          <div className='idUser'>
+            <p>ID: {login.id}</p>
+            <p>EMAIL: {login.email}</p>
+            {user ? <button onClick={logout}>Sair</button> : undefined}
+          </div>
+        )}
+
+    </div>
+
+      <hr/>
       
       <div className='container'>
 
@@ -119,7 +227,7 @@ function App() {
 
         <div className='inputSearch'>
           <h3>Pesquisar:</h3>
-          <input type="text" value={pesquisa} placeholder='Digite para pesquisar' onChange={(e) => searchTasks(e.target.value)} />
+          <input type="text"  placeholder='Digite para pesquisar' onChange={(e) => searchTasks(e.target.value)} />
         </div>
 
         <hr/>
