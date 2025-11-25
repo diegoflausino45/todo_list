@@ -127,7 +127,7 @@ function App() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
-  
+  //FUNÇÃO PARA MONITORAR ESTADO DO USUÁRIO
   useEffect(() => {
     async function checkLogin(){
       onAuthStateChanged(auth, (user) => {
@@ -146,6 +146,7 @@ function App() {
     checkLogin()
   }, [])
 
+  //FUNÇÃO PARA LOGAR USUÁRIO
   async function signUser(){
 
     await signInWithEmailAndPassword(auth, email, senha)
@@ -164,6 +165,7 @@ function App() {
 
   }
 
+  //FUNÇÃO PARA CADASTRAR USUÁRIO
   async function createUser(){
     await createUserWithEmailAndPassword(auth, email, senha)
     .then(() => {
@@ -180,6 +182,7 @@ function App() {
     })
   }
 
+  //FUNÇÃO PARA SAIR DA CONTA DE USUÁRIO
   async function logout(){
     await signOut(auth)
     setUser(false)
