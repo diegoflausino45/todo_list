@@ -8,6 +8,14 @@ import { useState, useEffect } from 'react';
 function App() {
 
   //--------------------------------------------------------------
+
+  //USUARIOS
+  
+  const [login, setLogin] = useState({})
+  const [user, setUser] = useState(false)
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+
   //TAREFAS
   const [tasks, setTasks] = useState([]);
 
@@ -16,26 +24,53 @@ function App() {
 
   const [tasksFiltered, setTasksFiltered] = useState([])
 
+  //FUNÇÃO PARA MONITORAR ESTADO DO USUÁRIO
+  useEffect(() => {
+    async function checkLogin(){
+      onAuthStateChanged(auth, (user) => {
+        if(user){
+          setUser(true)
+          setLogin({
+            email: user.email,
+            id: user.uid,
+          })
+        }else{
+          setUser(false)
+          setLogin({})
+        }
+      })
+    }
+    checkLogin()
+  }, [])
+
+
   //FUNÇÃO PARA CARREGAR AS TAREFAS DIRETO DO BANCO
   useEffect(() => {
   
     async function loadTasks() {
+      if(!user){
+        setTasksFiltered([])
+        return
+      } 
       const usb = onSnapshot(collection(db,'tasks'), (snapshot) => {
       let tasksList = [];
 
       snapshot.forEach((doc) => {
         tasksList.push({
           id: doc.id,
-          ...doc.data()
+          name: doc.data().name,
+          categoria: doc.data().categoria,
+          uid: doc.data().uid,
         });
       });
 
       setTasks(tasksList);
-      setTasksFiltered(tasksList)
+      const taskUsuario = tasksList.filter((task) => task.uid === login.id)
+      setTasksFiltered(taskUsuario)
     });
     }
     loadTasks();
-  }, []);
+  }, [user]);
 
   //FUNÇÃO PARA ADICIONAR TAREFA
   async function addTask(name, categoria) {
@@ -55,6 +90,7 @@ function App() {
       name: name,
       status: false,
       categoria: categoria,
+      uid: login.id,
     })
 
     setCatTask('')
@@ -122,29 +158,6 @@ function App() {
   //------------------------------------------------------------------
   //USUARIOS
 
-  const [login, setLogin] = useState({})
-  const [user, setUser] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
-
-  //FUNÇÃO PARA MONITORAR ESTADO DO USUÁRIO
-  useEffect(() => {
-    async function checkLogin(){
-      onAuthStateChanged(auth, (user) => {
-        if(user){
-          setUser(true)
-          setLogin({
-            email: user.email,
-            id: user.uid,
-          })
-        }else{
-          setUser(false)
-          setLogin({})
-        }
-      })
-    }
-    checkLogin()
-  }, [])
 
   //FUNÇÃO PARA LOGAR USUÁRIO
   async function signUser(){
@@ -188,11 +201,6 @@ function App() {
     setUser(false)
   }
 
-
-
-
-
-
   return (
     <div className="App">
 
@@ -216,7 +224,7 @@ function App() {
           <div className='idUser'>
             <p>ID: {login.id}</p>
             <p>EMAIL: {login.email}</p>
-            {user ? <button onClick={logout}>Sair</button> : undefined}
+            <button onClick={logout}>Sair</button>
           </div>
         )}
 
@@ -260,12 +268,13 @@ function App() {
           <ul>
 
             {tasksFiltered.map( (task) => {
-              return(
+              return( 
                 <li key={task.id}>
-
+                  <br/>
                   <div className='liText'>
-                    <span>{task.name}</span><br/>
-                    <span>{task.categoria}</span>
+                    <span>Titulo: {task.name}</span><br/>
+                    <span>Categoria: {task.categoria}</span><br/>
+                    <span>ID do usuário: {task.uid}</span>
                   </div>
 
                   <div className='liBtn'>
@@ -276,8 +285,8 @@ function App() {
                     )}
                     <button onClick={() => deleteTask(task.id)}>Excluir</button>
                   </div>
-
                 </li>
+
               )
             })}
           </ul>
