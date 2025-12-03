@@ -9,14 +9,14 @@ function App() {
 
   //--------------------------------------------------------------
 
-  //USUARIOS
+  // VARIAVEIS DE USUARIOS
   
   const [login, setLogin] = useState({})
   const [user, setUser] = useState(false)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
-  //TAREFAS
+  // VARIAVEIS DE TAREFAS
   const [tasks, setTasks] = useState([]);
 
   const [taskName, setTaskName] = useState('')
@@ -72,6 +72,9 @@ function App() {
     loadTasks();
   }, [user]);
 
+
+  //FUNÇÕES DE TAREFAS
+
   //FUNÇÃO PARA ADICIONAR TAREFA
   async function addTask(name, categoria) {
 
@@ -97,7 +100,7 @@ function App() {
     setTaskName('')
   }
 
-  //FUNÇÃO PARA CONCLUIR TAREFA
+  //FUNÇÃO PARA CONCLUIR TAREFA (CORRGIR BUGS)
   async function concluirTask(id, status){
       await updateDoc(doc(db, "tasks", id), {
         status: !status,
@@ -115,7 +118,7 @@ function App() {
     })
   }
 
-  //FUNÇÃO PARA FILTRAR PELA BARRA DE PESQUISA
+  //FUNÇÃO PARA FILTRAR PELA BARRA DE PESQUISA (CORRGIR BUGS)
   function searchTasks(text){
 
     const valor = text.toLowerCase()
@@ -125,7 +128,7 @@ function App() {
 
   }
 
-  //FUNÇÃO PARA FILTRAR POR TAREFAS CONCLUIDAS
+  //FUNÇÃO PARA FILTRAR POR TAREFAS CONCLUIDAS (CORRGIR BUGS)
   function handleChange(option){
     if(option === "feito"){
       console.log("FEITO")
@@ -146,18 +149,17 @@ function App() {
 
   //FUNÇÕES DE ORDEM (CRESCENTE E DECRESCENTE)
   function ascOrder(){
-    const taskAsc = [...tasks].sort((a, b) => a.name.localeCompare(b.name))     
+    const taskAsc = [...tasksFiltered].sort((a, b) => a.name.localeCompare(b.name))     
     setTasksFiltered(taskAsc)
   }
 
   function dscOrder(){
-    const taskDsc = [...tasks].sort((a, b) => b.name.localeCompare(a.name))
+    const taskDsc = [...tasksFiltered].sort((a, b) => b.name.localeCompare(a.name))
     setTasksFiltered(taskDsc)
   }
 
   //------------------------------------------------------------------
-  //USUARIOS
-
+  //FUNÇÔES USUARIOS
 
   //FUNÇÃO PARA LOGAR USUÁRIO
   async function signUser(){
@@ -222,7 +224,6 @@ function App() {
         )}
         {user && (
           <div className='idUser'>
-            <p>ID: {login.id}</p>
             <p>EMAIL: {login.email}</p>
             <button onClick={logout}>Sair</button>
           </div>
@@ -231,8 +232,8 @@ function App() {
     </div>
 
       <hr/>
-      
-      <div className='container'>
+      {user ? (
+        <div className='container'>
 
         <h1>Todo List</h1>
 
@@ -307,6 +308,8 @@ function App() {
         </div>
 
       </div>
+      ) : undefined}
+      
     </div>
   );
 }
