@@ -61,11 +61,12 @@ function App() {
           name: doc.data().name,
           categoria: doc.data().categoria,
           uid: doc.data().uid,
+          status: doc.data().status,  
         });
       });
 
-      setTasks(tasksList);
       const taskUsuario = tasksList.filter((task) => task.uid === login.id)
+      setTasks(taskUsuario);
       setTasksFiltered(taskUsuario)
     });
     }
@@ -100,11 +101,12 @@ function App() {
     setTaskName('')
   }
 
-  //FUNÇÃO PARA CONCLUIR TAREFA (CORRGIR BUGS)
+  //FUNÇÃO PARA CONCLUIR TAREFA 
   async function concluirTask(id, status){
       await updateDoc(doc(db, "tasks", id), {
         status: !status,
       })
+
   }
 
   //FUNÇÃO PARA DELETAR TAREFA
@@ -118,7 +120,7 @@ function App() {
     })
   }
 
-  //FUNÇÃO PARA FILTRAR PELA BARRA DE PESQUISA (CORRGIR BUGS)
+  //FUNÇÃO PARA FILTRAR PELA BARRA DE PESQUISA
   function searchTasks(text){
 
     const valor = text.toLowerCase()
@@ -128,7 +130,7 @@ function App() {
 
   }
 
-  //FUNÇÃO PARA FILTRAR POR TAREFAS CONCLUIDAS (CORRGIR BUGS)
+  //FUNÇÃO PARA FILTRAR POR TAREFAS CONCLUIDAS
   function handleChange(option){
     if(option === "feito"){
       console.log("FEITO")
