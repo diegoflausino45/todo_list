@@ -208,14 +208,14 @@ function App() {
   return (
     <div className="App">
 
-    <div className='container'>
+    <div className='containerUser'>
 
         {user ? <h3>Usuário Logado</h3> : <h3>Fazer Login</h3>}
 
         {user ? undefined : (
         <div className='sign'>
           <form>
-            <input type='email' placeholder='Digite o seu email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
+            <input type='email' placeholder='Digite o seu email' value={email} onChange={(e) => setEmail(e.target.value)}/>
             <input type='password' placeholder='Digite sua senha' value={senha} onChange={(e) => setSenha(e.target.value)}/>
           </form>
           <div className='btnSign'>
