@@ -264,19 +264,20 @@ function App() {
 
               <div className='inputFilter'>
                 <h3>Filtrar:</h3>
+                <div className='filtros'>
+                  <div className='Status'>
+                    <label>Status:</label>
+                    <select onChange={(e) => handleChange(e.target.value)}>
+                      <option value="">Todos</option>
+                      <option value="feito">Concluídos</option>
+                      <option value="Nfeito">Não Concluídos</option>
+                    </select>
+                  </div>
 
-                <div className='Status'>
-                  <label>Status:</label>
-                  <select onChange={(e) => handleChange(e.target.value)}>
-                    <option value="">Todos</option>
-                    <option value="feito">Concluídos</option>
-                    <option value="Nfeito">Não Concluídos</option>
-                  </select>
-                </div>
-
-                <div className='OrdemAlfa'>
-                  <button onClick={ascOrder}>Asc</button>
-                  <button onClick={dscOrder}>Dsc</button>
+                  <div className='OrdemAlfa'>
+                    <button onClick={ascOrder}>Asc</button>
+                    <button onClick={dscOrder}>Dsc</button>
+                  </div>
                 </div>
               </div>
 

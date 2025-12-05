@@ -178,7 +178,6 @@ ul{
     text-align: center;
     padding: 0.3em;
     color: rgb(0, 78, 78);    
-    border-bottom: 2px solid rgba(81, 81, 81, 0.64);
 }
 
 .containerList h3{
@@ -186,8 +185,29 @@ ul{
 }
 
 /*Barra de pesquisa*/
+.inputSearch{
+    border-bottom: 2px solid rgba(81, 81, 81, 0.64);
+    padding-bottom: 1em;
+}
+
+.inputSearch h3{
+    font-size: 1.65em;
+    padding-bottom: 0.2em;
+}
+
+.inputSearch input{
+    width: 100%;
+    padding: 0.5em;
+    background-color: #f1f1f1;
+}
+
+.inputSearch input:focus{
+    outline: none;
+    box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.3); 
+}
 
 /*Filtrar por status e Ordem alfabética*/
+.filtros
 
 /*Tarefas*/
 
