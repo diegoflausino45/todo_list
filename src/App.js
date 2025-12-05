@@ -208,110 +208,126 @@ function App() {
   return (
     <div className="App">
 
-    <div className='containerUser'>
 
-        {user ? <h3>Usuário Logado</h3> : <h3>Fazer Login</h3>}
+      <div className='container'>
 
-        {user ? undefined : (
-        <div className='sign'>
-          <form>
-            <input type='email' placeholder='Digite o seu email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <input type='password' placeholder='Digite sua senha' value={senha} onChange={(e) => setSenha(e.target.value)}/>
-          </form>
-          <div className='btnSign'>
-            <button onClick={signUser}>Login</button>
-            <button onClick={createUser}>Cadastrar</button>
-          </div>
-        </div>
-        )}
-        {user && (
-          <div className='idUser'>
-            <p>EMAIL: {login.email}</p>
-            <button onClick={logout}>Sair</button>
-          </div>
-        )}
+        <div className='containerUser'>
 
-    </div>
+          {user ? undefined : (
+            <div className='containerSign'>
+              <div className='sign'>
+                {user ? undefined : <h3>Login</h3>}
 
-      <hr/>
-      {user ? (
-        <div className='container'>
+                <form>
+                  <label>Seu e-mail</label>
+                  <input type='email' placeholder='seuemail@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <label>Sua senha</label>
+                  <input type='password' placeholder='1234...' value={senha} onChange={(e) => setSenha(e.target.value)} />
+                </form>
+                <div className='btnSign'>
+                  <button className='btnLogin' onClick={signUser}>Logar</button>
+                </div>
+              </div>
+              <div className='rodape'>
+                <span>Ainda não tem uma conta? </span>
+                <button className='btnCreate' onClick={createUser}>Cadastre-se</button>
+              </div>
+            </div>
+          )}
+          
 
-        <h1>Todo List</h1>
-
-        <div className='inputSearch'>
-          <h3>Pesquisar:</h3>
-          <input type="text"  placeholder='Digite para pesquisar' onChange={(e) => searchTasks(e.target.value)} />
         </div>
 
-        <hr/>
+        {user ? (
+          <div className='containerList'>
 
-        <div className='inputFilter'>
-          <h3>Filtrar:</h3>
-
-          <div className='Status'>  
-            <label>Status:</label>
-            <select onChange={(e) => handleChange(e.target.value)}>
-              <option value="">Todos</option>
-              <option value="feito">Concluídos</option>
-              <option value="Nfeito">Não Concluídos</option>
-            </select>
-          </div>
-
-          <div className='OrdemAlfa'>
-            <button onClick={ascOrder}>Asc</button>
-            <button onClick={dscOrder}>Dsc</button>
-          </div>
-        </div>
-
-        <hr/>
-
-
-        <div className='listTasks'>
-          <ul>
-
-            {tasksFiltered.map( (task) => {
-              return( 
-                <li key={task.id}>
-                  <br/>
-                  <div className='liText'>
-                    <span>Titulo: {task.name}</span><br/>
-                    <span>Categoria: {task.categoria}</span><br/>
-                    <span>ID do usuário: {task.uid}</span>
+            <div className='containerIdUser'>
+              {user && (
+                <div className='idUser'>
+                  {user ? <h3>Usuário:</h3> : undefined}
+                  <div>
+                    <span>EMAIL: {login.email}</span>
+                    <button onClick={logout}>Sair</button>
                   </div>
 
-                  <div className='liBtn'>
-                    {task.status ? (
-                      <button onClick={() => concluirTask(task.id, task.status)}>Desmarcar</button>
-                    ) : (
-                      <button onClick={() => concluirTask(task.id, task.status)}>Concluir</button>
-                    )}
-                    <button onClick={() => deleteTask(task.id)}>Excluir</button>
-                  </div>
-                </li>
+                </div>
+              )}
+            </div>
 
-              )
-            })}
-          </ul>
-        </div>
+            <div className='containerListTasks'>
+              <h1>Lista de Tarefas</h1>
 
-        <hr/>
+              <div className='inputSearch'>
+                <h3>Pesquisar:</h3>
+                <input type="text" placeholder='Digite para pesquisar' onChange={(e) => searchTasks(e.target.value)} />
+              </div>
 
-        <div className='criarTarefa'>
-          <h2>Criar tarefa:</h2>
-          <input value={taskName} onChange={(e) => setTaskName(e.target.value)} type='text' placeholder='Digite o titulo' />
-          <select value={catTask} onChange={(e) => setCatTask(e.target.value)}>
-            <option value={""}>Selecione uma categoria</option>
-            <option>Trabalho</option>
-            <option>Estudos</option>
-            <option>Pessoal</option>
-          </select>
-          <button onClick={() => addTask(taskName, catTask)}>Criar tarefa</button>
-        </div>
+              <div className='inputFilter'>
+                <h3>Filtrar:</h3>
+
+                <div className='Status'>
+                  <label>Status:</label>
+                  <select onChange={(e) => handleChange(e.target.value)}>
+                    <option value="">Todos</option>
+                    <option value="feito">Concluídos</option>
+                    <option value="Nfeito">Não Concluídos</option>
+                  </select>
+                </div>
+
+                <div className='OrdemAlfa'>
+                  <button onClick={ascOrder}>Asc</button>
+                  <button onClick={dscOrder}>Dsc</button>
+                </div>
+              </div>
+
+              <div className='listTasks'>
+                <ul>
+
+                  {tasksFiltered.map((task) => {
+                    return (
+                      <li key={task.id}>
+                        <br />
+                        <div className='liText'>
+                          <span>Titulo: {task.name}</span><br />
+                          <span>Categoria: {task.categoria}</span><br />
+                          <span>ID do usuário: {task.uid}</span>
+                        </div>
+
+                        <div className='liBtn'>
+                          {task.status ? (
+                            <button onClick={() => concluirTask(task.id, task.status)}>Desmarcar</button>
+                          ) : (
+                            <button onClick={() => concluirTask(task.id, task.status)}>Concluir</button>
+                          )}
+                          <button onClick={() => deleteTask(task.id)}>Excluir</button>
+                        </div>
+                      </li>
+
+                    )
+                  })}
+                </ul>
+              </div>
+
+              <div className='criarTarefa'>
+                <h2>Criar tarefa:</h2>
+                <input value={taskName} onChange={(e) => setTaskName(e.target.value)} type='text' placeholder='Digite o titulo' />
+                <select value={catTask} onChange={(e) => setCatTask(e.target.value)}>
+                  <option value={""}>Selecione uma categoria</option>
+                  <option>Trabalho</option>
+                  <option>Estudos</option>
+                  <option>Pessoal</option>
+                </select>
+                <button onClick={() => addTask(taskName, catTask)}>Criar tarefa</button>
+              </div>
+            </div>
+
+
+          </div>
+        ) : undefined}
 
       </div>
-      ) : undefined}
-      
+
+
     </div>
   );
 }
