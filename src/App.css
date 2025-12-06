@@ -9,7 +9,7 @@ body{
     font-size: 1em;
     width: 100%;
     height: 100dvh;
-    background-color: #f9f9f9;
+    background-color: #fff;
 }
 
 .App{
@@ -34,6 +34,7 @@ body{
 /*LOGIN USUÁRIO
 ----------------------*/
 .containerSign{
+    margin: auto;
     width: 500px;
     max-width: 90%; 
 }
@@ -44,7 +45,7 @@ body{
     flex-direction: column;
     
 
-    background-color: #ffffff;
+    background-color: #f1f1f1;
     border: 1px solid rgba(0, 128, 0, 0.207);
     border-bottom: none;
 }
@@ -133,19 +134,18 @@ body{
 ---------------------------*/
 .idUser{
     display: flex;
-    flex-direction: column;
-    align-items: left;
+    justify-content: space-between;
     margin: 0.5em;
 }
 
 .idUser div{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 0.3em;
 }
 
 .idUser button {
-    padding: 0.2em;
+    padding: 0.3em 0.8em;
     border-radius: 0.5em;
     background-color: rgb(0, 78, 78);
     color: #ffffff;
@@ -163,11 +163,12 @@ body{
 }
 
 .containerListTasks{
-    background-color: #fff;
+    background-color: #f1f1f1;
     padding: 1.5em 2em;
     display: flex;
     flex-direction: column;
     gap: 1em;
+    border-radius: 1em;
 }
 
 ul{
@@ -175,12 +176,13 @@ ul{
 }
 
 .containerList h1{
+    font-size: 2.2em;
     text-align: center;
     padding: 0.3em;
     color: rgb(0, 78, 78);    
 }
 
-.containerList h3{
+.containerList h3, h2{
     color: rgb(0, 78, 78);
 }
 
@@ -198,7 +200,8 @@ ul{
 .inputSearch input{
     width: 100%;
     padding: 0.5em;
-    background-color: #f1f1f1;
+    background-color: #fff;
+    border-radius: 0.4em;
 }
 
 .inputSearch input:focus{
@@ -207,8 +210,135 @@ ul{
 }
 
 /*Filtrar por status e Ordem alfabética*/
-.filtros
+.inputFilter{
+    border-bottom: 2px solid rgba(81, 81, 81, 0.64);
+    padding-bottom: 1em;
+}
+
+.inputFilter h3{
+    font-size: 1.65em;
+    padding-bottom: 0.6em;
+}
+
+.filtros{
+    display: flex;
+    gap: 4em;
+}
+
+.Status, .OrdemAlfa{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+    width: 100%;
+}
+
+.Status select{
+    width: 100%;
+    padding: 0.2em;
+    border-radius: 0.4em;
+    cursor: pointer;
+}
+
+.OrdemAlfa button{
+    background-color: rgb(0, 78, 78);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.25em  0.8em;
+    margin-right: 0.8em;
+
+    border-radius: 0.5em;
+}
+
+.label{
+    font-size: 1.1em;
+}
 
 /*Tarefas*/
+.listTasks{
+    border-bottom: 2px solid rgba(81, 81, 81, 0.64);
+}
+
+.listTasks li{
+    background-color: #fff;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 0.8em;
+}
+
+.listTasks .liText{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}
+
+.liText  .name{
+    font-size: 1.2em;
+}
+
+.marcado{
+    text-decoration: line-through;
+}
+
+.liText .cat{
+    font-size: 0.85em;
+}
+
+.liBtn button{
+    margin-left: 0.5em;
+    padding: 0.3em 0.7em;
+    border-radius: 0.4em;
+    color: white;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.liBtn .btnExcluir{
+    background-color: red;
+}
+
+.liBtn .btnConcluir{
+    background-color: green;
+}
+
+.liBtn .btnDesmarcar{
+    background-color: orange;
+}
 
 /*Criação de tarefas*/
+.criarTarefa{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.criarTarefa select:focus{
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.227);
+}
+
+.criarTarefa input:focus{
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.227);
+}
+
+.criarTarefa input, select{
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 0.4em;
+}
+
+.criarTarefa button{
+    background-color: rgb(0, 78, 78);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.3em  0.8em;
+    border-radius: 0.4em;
+    margin-right: 0.8em;
+    width: 8em;
+}

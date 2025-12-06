@@ -244,11 +244,11 @@ function App() {
             <div className='containerIdUser'>
               {user && (
                 <div className='idUser'>
-                  {user ? <h3>Usuário:</h3> : undefined}
                   <div>
-                    <span>EMAIL: {login.email}</span>
-                    <button onClick={logout}>Sair</button>
+                  {user ? <h3>Usuário:</h3> : undefined}
+                    <span>{login.email}</span>
                   </div>
+                    <button onClick={logout}>Sair</button>
 
                 </div>
               )}
@@ -266,7 +266,7 @@ function App() {
                 <h3>Filtrar:</h3>
                 <div className='filtros'>
                   <div className='Status'>
-                    <label>Status:</label>
+                    <label className='label'>Status:</label>
                     <select onChange={(e) => handleChange(e.target.value)}>
                       <option value="">Todos</option>
                       <option value="feito">Concluídos</option>
@@ -275,8 +275,11 @@ function App() {
                   </div>
 
                   <div className='OrdemAlfa'>
-                    <button onClick={ascOrder}>Asc</button>
-                    <button onClick={dscOrder}>Dsc</button>
+                    <label className='label'>Ordem alfabética</label>
+                    <div>
+                      <button onClick={ascOrder}>Asc</button>
+                      <button onClick={dscOrder}>Desc</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -287,20 +290,19 @@ function App() {
                   {tasksFiltered.map((task) => {
                     return (
                       <li key={task.id}>
-                        <br />
                         <div className='liText'>
-                          <span>Titulo: {task.name}</span><br />
-                          <span>Categoria: {task.categoria}</span><br />
-                          <span>ID do usuário: {task.uid}</span>
+                          {task.status ? <span className='name marcado'>{task.name}</span> : <span className='name'>{task.name}</span> }
+                          
+                          <span className='cat'>({task.categoria})</span>
                         </div>
 
                         <div className='liBtn'>
                           {task.status ? (
-                            <button onClick={() => concluirTask(task.id, task.status)}>Desmarcar</button>
+                            <button className='btnDesmarcar' onClick={() => concluirTask(task.id, task.status)}>Desmarcar</button>
                           ) : (
-                            <button onClick={() => concluirTask(task.id, task.status)}>Concluir</button>
+                            <button className='btnConcluir' onClick={() => concluirTask(task.id, task.status)}>Concluir</button>
                           )}
-                          <button onClick={() => deleteTask(task.id)}>Excluir</button>
+                          <button className='btnExcluir' onClick={() => deleteTask(task.id)}>X</button>
                         </div>
                       </li>
 
