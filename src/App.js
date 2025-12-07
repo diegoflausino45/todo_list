@@ -10,7 +10,6 @@ function App() {
   //--------------------------------------------------------------
 
   // VARIAVEIS DE USUARIOS
-  
   const [login, setLogin] = useState({})
   const [user, setUser] = useState(false)
   const [email, setEmail] = useState('')
@@ -75,7 +74,6 @@ function App() {
 
 
   //FUNÇÕES DE TAREFAS
-
   //FUNÇÃO PARA ADICIONAR TAREFA
   async function addTask(name, categoria) {
 
