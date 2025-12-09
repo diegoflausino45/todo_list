@@ -40,7 +40,7 @@ function Sign() {
 
             <div className='containerSign'>
               <div className='sign'>
-                <h3>Sign</h3>
+                <h3>Sign In</h3>
 
                 <form>
                   <label>Seu e-mail</label>
