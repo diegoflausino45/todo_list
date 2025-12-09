@@ -1,0 +1,99 @@
+
+/*LOGIN USUÁRIO
+----------------------*/
+.containerSign{
+    margin: auto;
+    width: 500px;
+    max-width: 90%; 
+}
+
+.sign{
+    padding: 1.5em 1.5em 0em;
+    display: flex;
+    flex-direction: column;
+    
+
+    background-color: #f1f1f1;
+    border: 1px solid rgba(0, 128, 0, 0.207);
+    border-bottom: none;
+}
+
+.sign h3{
+    text-align: center;
+    font-size: 2.1em;
+    color: rgb(0, 78, 78);
+    padding-bottom: 0.2em;
+
+    border-bottom: 2px solid rgba(81, 81, 81, 0.64);
+}
+
+.sign form{
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0;
+}
+
+.sign input{
+    width: 100%;
+    padding: 0.6em;
+    border: 1px solid rgba(126, 126, 126, 0.638);
+    border-radius: 0.3em;
+    font-size: 0.75em;   
+}
+
+.sign input:focus{
+    outline: none;
+    border: 1px solid black;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3); 
+}
+
+.sign label{
+    font-size: 0.9em;
+    padding: 0.8em 0em 0.2em;
+    color: rgb(0, 32, 32);
+
+}
+
+.sign .btnSign{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign .btnSign .btnLogin{
+    width: 100%;
+    padding: 0.3em;
+    margin: 1em;
+    cursor: pointer;
+    
+    background-color: rgb(0, 78, 78);
+    border-radius: 0.2em;
+
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.sign .btnSign .btnCreate{
+    cursor: pointer;
+    border: none;
+    background-color: #fff;
+}
+
+.rodape{
+    background-color: #73a8bc3d;
+    border: 1px solid rgba(0, 128, 0, 0.207);
+    border-top: none;
+    padding: 1em;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.56);
+    text-align: end;
+}
+
+.rodape .btnCreate{
+    padding: 0.2em;
+    color: rgb(5, 147, 255);
+    font-weight: bold;
+    cursor: pointer;
+}

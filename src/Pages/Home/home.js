@@ -1,9 +1,10 @@
 import { onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../../firebaseConnection';
-import '../../App.css'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import './home.css'
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 import { useState, useEffect } from 'react';
+import Login from '../Login/login';
 
 function Home() {
 
@@ -12,8 +13,6 @@ function Home() {
   // VARIAVEIS DE USUARIOS
   const [login, setLogin] = useState({})
   const [user, setUser] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
 
   // VARIAVEIS DE TAREFAS
   const [tasks, setTasks] = useState([]);
@@ -158,45 +157,6 @@ function Home() {
     setTasksFiltered(taskDsc)
   }
 
-  //------------------------------------------------------------------
-  //FUNÇÔES USUARIOS
-
-  //FUNÇÃO PARA LOGAR USUÁRIO
-  async function signUser(){
-
-    await signInWithEmailAndPassword(auth, email, senha)
-    .then((userCredential) => {
-      setLogin({
-        email: userCredential.user.email,
-        id: userCredential.user.uid,
-      })
-      setUser(true)
-      setEmail('')
-      setSenha('')
-    })
-    .catch((error) => {
-        alert("Erro:" + error)
-      })
-
-  }
-
-  //FUNÇÃO PARA CADASTRAR USUÁRIO
-  async function createUser(){
-    await createUserWithEmailAndPassword(auth, email, senha)
-    .then(() => {
-      alert("Usuário criado com sucesso")
-      setEmail('')
-      setSenha('')
-    })
-    .catch((error) => {
-      if(error.code === 'auth/weak-password'){
-        alert("Senha muito fraca")
-      }else if(error.code === "auth/email-already-in-use"){
-        alert("Email já em uso!")
-      }
-    })
-  }
-
   //FUNÇÃO PARA SAIR DA CONTA DE USUÁRIO
   async function logout(){
     await signOut(auth)
@@ -209,32 +169,7 @@ function Home() {
 
       <div className='container'>
 
-        <div className='containerUser'>
-
-          {user ? undefined : (
-            <div className='containerSign'>
-              <div className='sign'>
-                {user ? undefined : <h3>Login</h3>}
-
-                <form>
-                  <label>Seu e-mail</label>
-                  <input type='email' placeholder='seuemail@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
-                  <label>Sua senha</label>
-                  <input type='password' placeholder='1234...' value={senha} onChange={(e) => setSenha(e.target.value)} />
-                </form>
-                <div className='btnSign'>
-                  <button className='btnLogin' onClick={signUser}>Logar</button>
-                </div>
-              </div>
-              <div className='rodape'>
-                <span>Ainda não tem uma conta? </span>
-                <button className='btnCreate' onClick={createUser}>Cadastre-se</button>
-              </div>
-            </div>
-          )}
-          
-
-        </div>
+        
 
         {user ? (
           <div className='containerList'>
@@ -324,7 +259,7 @@ function Home() {
 
 
           </div>
-        ) : undefined}
+        ) : <Login/>}
 
       </div>
 
