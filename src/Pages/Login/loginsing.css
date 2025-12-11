@@ -1,18 +1,20 @@
 /*APRESENTAÇÃO
 ---------------------------*/
 .apresentation{
-    width: 70%;
+    width: 80%;
     background-color: green;
 
     display: flex;
     align-items: center;
     text-align: center;
+            border-radius: 1em 0em 0em 1em;
+
 }
 
 .apresentation div{
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    padding: 4em;
     gap: 1em;
     color: white;
 }
@@ -23,11 +25,11 @@
 ----------------------*/
 .containerSign{
     margin: auto;
-    width: 1000px;
+    width: 1200px;
     max-width: 90%; 
     display: flex;
     justify-content: center;
-    border: 1px solid red;
+    border-radius: 1em;
 }
 
 .sign{
@@ -39,6 +41,8 @@
     background-color: #f1f1f1;
     border: 1px solid rgba(0, 128, 0, 0.207);
     border-bottom: none;
+        border-radius: 0em 1em 1em 0em;
+
 }
 
 .sign h3{
