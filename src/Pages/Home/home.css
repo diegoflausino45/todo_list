@@ -176,6 +176,10 @@ ul{
     background-color: orange;
 }
 
+.liBtn .btnEdit{
+    background-color: orange;
+}
+
 /*Criação de tarefas*/
 .criarTarefa{
     display: flex;

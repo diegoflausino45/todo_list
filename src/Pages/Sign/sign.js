@@ -1,7 +1,7 @@
 import { auth } from '../../firebaseConnection';
 import '../Login/loginsing.css'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Sign() {
@@ -11,6 +11,7 @@ function Sign() {
     // VARIAVEIS DE USUARIOS
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
+    const [nome, setNome] = useState('')
 
 
     //FUNÇÃO PARA CADASTRAR USUÁRIO
@@ -20,6 +21,7 @@ function Sign() {
                 alert("Usuário criado com sucesso")
                 setEmail('')
                 setSenha('')
+                setNome('')
             })
             .catch((error) => {
                 if (error.code === 'auth/weak-password') {
@@ -41,6 +43,7 @@ function Sign() {
                     <div className='containerSign'>
 
                         <div className='apresentation'>
+                            <h1>Todo List</h1>
                             <div>
                                 <h2>Bem vindo de volta!</h2>
                                 <p>Mantenha-se conectado, por favor entre com seu login</p>
@@ -51,9 +54,11 @@ function Sign() {
                             <h3>Sign In</h3>
 
                             <form>
-                                <label>Seu e-mail</label>
+                                <label>Nome</label>
+                                <input type='email' placeholder='fulano de tal..' value={nome} onChange={(e) => setNome(e.target.value)}/>
+                                <label>E-mail</label>
                                 <input type='email' placeholder='seuemail@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
-                                <label>Sua senha</label>
+                                <label>Senha</label>
                                 <input type='password' placeholder='1234...' value={senha} onChange={(e) => setSenha(e.target.value)} />
                             </form>
                             <div className='btnSign'>

@@ -42,6 +42,15 @@ function Login() {
 
           {user ? undefined : (
             <div className='containerSign'>
+               <div className='apresentation'>
+                            <h1>Todo List</h1>
+                            <div>
+                                <h2>Seja Bem vindo!</h2>
+                                <p>Ainda não tem uma conta? Faça o seu cadastro.</p>
+                                <Link to={`/sign`}><button className='btnCreate'>Cadastre-se</button></Link>
+
+                            </div>
+                        </div>
               <div className='sign'>
                 {user ? undefined : <h3>Login</h3>}
 
@@ -54,10 +63,6 @@ function Login() {
                 <div className='btnSign'>
                   <button className='btnLogin' onClick={signUser}>Logar</button>
                 </div>
-              </div>
-              <div className='rodape'>
-                <span>Ainda não tem uma conta? </span>
-                <Link to={`/sign`}><button className='btnCreate'>Cadastre-se</button></Link>
               </div>
             </div>
           )}

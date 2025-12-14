@@ -1,4 +1,4 @@
-import { onSnapshot } from 'firebase/firestore';
+import { getDoc, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../../firebaseConnection';
 import './home.css'
 import { signOut, onAuthStateChanged } from 'firebase/auth';
@@ -19,6 +19,10 @@ function Home() {
 
   const [taskName, setTaskName] = useState('')
   const [catTask, setCatTask] = useState('')
+
+  const [editName, setEditName] = useState('')
+  const [editCat, setEditCat] = useState("")
+  const [editID, setEditID] = useState()
 
   const [tasksFiltered, setTasksFiltered] = useState([])
 
@@ -114,6 +118,34 @@ function Home() {
     })
     .catch(() => {
       alert("Erro")
+    })
+  }
+
+  //FUNÇÃO PARA EDITAR TAREFA
+  async function obterTarefa(id){
+
+    const taskRef = doc(db, "tasks", id)
+
+    await getDoc(taskRef)
+    .then((doc) => {
+      setEditName(doc.data().name)
+      setEditCat(doc.data().categoria)
+      setEditID(doc.id)
+    })
+
+       
+  }
+  async function editTask(){
+    const docRef = doc(db, "tasks", editID)
+    await updateDoc(docRef, {
+      name: editName,
+      categoria: editCat
+    })
+    .then(() => {
+      alert("Taks atualizada com sucesso")
+      setEditName('')
+      setEditCat('')
+      setEditID('')
     })
   }
 
@@ -235,6 +267,7 @@ function Home() {
                           ) : (
                             <button className='btnConcluir' onClick={() => concluirTask(task.id, task.status)}>Concluir</button>
                           )}
+                          <button className='btnEdit' onClick={() => obterTarefa(task.id)}>Editar</button>
                           <button className='btnExcluir' onClick={() => deleteTask(task.id)}>X</button>
                         </div>
                       </li>
@@ -244,6 +277,17 @@ function Home() {
                 </ul>
               </div>
 
+              <div className='criarTarefa'>
+                <h2>Editar tarefa:</h2>
+                <input value={editName} onChange={(e) => setEditName(e.target.value)} type='text' placeholder='Digite o titulo' />
+                <select value={editCat} onChange={(e) => setEditCat(e.target.value)}>
+                  <option value={""}>Selecione uma categoria</option>
+                  <option>Trabalho</option>
+                  <option>Estudos</option>
+                  <option>Pessoal</option>
+                </select>
+                <button onClick={() => editTask()}>Editar tarefa</button>
+              </div><hr/>
               <div className='criarTarefa'>
                 <h2>Criar tarefa:</h2>
                 <input value={taskName} onChange={(e) => setTaskName(e.target.value)} type='text' placeholder='Digite o titulo' />
