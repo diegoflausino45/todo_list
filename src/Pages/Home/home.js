@@ -290,7 +290,7 @@ function Home() {
               </div><hr/>
               <div className='criarTarefa'>
                 <h2>Criar tarefa:</h2>
-                <input value={taskName} onChange={(e) => setTaskName(e.target.value)} type='text' placeholder='Digite o titulo' />
+                <input value={taskName} onChange={(e) => setTaskName(e.target.value)} type='text' placeholder='Digite o titulo...' />
                 <select value={catTask} onChange={(e) => setCatTask(e.target.value)}>
                   <option value={""}>Selecione uma categoria</option>
                   <option>Trabalho</option>
